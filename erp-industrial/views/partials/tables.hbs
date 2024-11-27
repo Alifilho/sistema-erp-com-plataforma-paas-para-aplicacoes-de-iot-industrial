@@ -1,0 +1,92 @@
+<div class="w-full bg-white rounded-lg shadow p-6">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Dados dos Sensores</h2>
+  <div class="space-y-6">
+    <!-- Tabela da Prensa Hidráulica -->
+    <div class="text-gray-700">
+      <h3 class="text-lg font-semibold mb-2">Prensa Hidráulica</h3>
+      <div class="overflow-x-auto">
+        <table class="table-auto w-full border-collapse border border-gray-300 shadow-md rounded-lg">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">ID</th>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Pressão (PSI)</th>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Temp. Óleo (°C)</th>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Tempo Operação (min)
+              </th>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Data/Hora</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each hydraulicPressData}}
+            <tr class="hover:bg-gray-100">
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{machineId}}</td>
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{pressure}} Psi</td>
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{oilTemperature}} °C</td>
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{operationTime}} min</td>
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{timestamp}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Torno Mecânico -->
+    <div class="text-gray-700">
+      <h3 class="text-lg font-semibold mb-2">Torno Mecânico</h3>
+      <div class="overflow-x-auto">
+        <table class="table-auto w-full border-collapse border border-gray-300 shadow-md rounded-lg">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">ID</th>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">RPM</th>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Temp. (°C)</th>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Vibração (G)</th>
+              <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Data/Hora</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each latheMachineData}}
+            <tr class="hover:bg-gray-100">
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{machineId}}</td>
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{rpm}} rpm</td>
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{temperature}} °C</td>
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{vibration}} G</td>
+              <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{timestamp}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Esteira Transportadora -->
+    <div class="text-gray-700">
+      <h3 class="text-lg font-semibold mb-2">Esteira Transportadora</h3>
+      <div class="overflow-x-auto">
+       <table class="table-auto w-full border-collapse border border-gray-300 shadow-md rounded-lg">
+         <thead class="bg-gray-200">
+          <tr>
+            <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">ID</th>
+            <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Velocidade (m/s)</th>
+            <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Carga (kg)</th>
+            <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Temp. Motor (°C)</th>
+            <th class="px-6 py-3 border-b border-gray-300 text-left font-medium text-gray-600">Data/Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each conveyorBeltData}}
+          <tr class="hover:bg-gray-100">
+            <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{machineId}}</td>
+            <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{speed}} m/s</td>
+            <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{load}} kg</td>
+            <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{motorTemperature}} °C</td>
+            <td class="px-6 py-4 border-b border-gray-300 text-gray-700">{{timestamp}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>

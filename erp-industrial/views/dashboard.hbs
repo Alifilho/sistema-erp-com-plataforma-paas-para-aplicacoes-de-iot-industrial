@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link href="/tailwind.css" rel="stylesheet">
+  <script src="https://unpkg.com/htmx.org"></script>
+</head>
+
+<body class="h-full flex flex-col items-center bg-gray-100 font-sans">
+  <div class="min-h-full w-1/2 flex flex-col items-center justify-self-center space-y-8 p-6">
+    <header class="w-full max-w-screen-lg">
+      <h1 class="text-3xl font-bold text-center text-gray-700">Dashboard IoT Industrial</h1>
+    </header>
+
+    <!-- Insights -->
+    <section hx-get="/dashboard/data/insights" hx-swap="innerHTML" hx-trigger="load, every 3s" class="w-full">
+      {{> insights }}
+    </section>
+
+    <!-- Gráficos -->
+    <div class="w-full bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Gráficos</h2>
+      <div class="space-y-6">
+        <!-- Gráfico de Pressão -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700 mb-2">Evolução da Pressão (Últimos 10 Registros)</h3>
+          <canvas id="pressureChart" class="w-full"></canvas>
+        </div>
+        <!-- Gráfico de Tempo de Operação -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700 mb-2">Tempo de Operação por Máquina</h3>
+          <canvas id="operationChart" class="w-full"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabelas -->
+    <section hx-get="/dashboard/data/tables" hx-swap="innerHTML" hx-trigger="load, every 3s" class="w-full">
+      {{> tables }}
+    </section>
+  </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+<script>
+  let pressureChart;
+  let operationChart;
+
+  async function fetchCharts() {
+    try {
+      const response = await fetch('/dashboard/data/charts');
+      if (!response.ok) throw new Error(`Erro: ${response.statusText}`);
+      const data = await response.json();
+
+      // Destruir gráficos existentes antes de recriar
+      if (pressureChart) pressureChart.destroy();
+      if (operationChart) operationChart.destroy();
+
+      // Criar gráfico de pressão
+      const ctx1 = document.getElementById('pressureChart').getContext('2d');
+      pressureChart = new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: data.pressureChartData.labels,
+          datasets: [{
+            label: 'Pressão (PSI)',
+            data: data.pressureChartData.data,
+            borderColor: 'blue',
+            borderWidth: 2,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio: 5,
+          scales: {
+            x: {
+              type: 'time',
+              time: {
+                tooltipFormat: 'HH:mm',
+                unit: 'minute',
+                displayFormats: {
+                  minute: 'HH:mm',
+                },
+              },
+              title: {
+                display: true,
+                text: 'Horário',
+              },
+            }
+          },
+        },
+      });
+
+      // Criar gráfico de operação
+      const ctx2 = document.getElementById('operationChart').getContext('2d');
+      operationChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: data.operationChartData.labels,
+          datasets: [{
+            label: 'Tempo de Operação (h)',
+            data: data.operationChartData.data.map(value => (value / 60).toFixed(1)), // Convertendo minutos para horas
+            backgroundColor: ['red', 'green', 'blue'],
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio: 5,
+        },
+      });
+    } catch (error) {
+      console.error('Erro ao buscar os dados dos gráficos:', error);
+    }
+  }
+
+  // Chamar a função de inicialização e configurar atualizações periódicas
+  fetchCharts();
+  setInterval(fetchCharts, 15000);
+</script>
+
+</html>

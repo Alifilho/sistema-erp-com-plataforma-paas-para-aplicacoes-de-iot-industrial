@@ -1,0 +1,30 @@
+<div class="w-full bg-white rounded-lg shadow p-6">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Indicadores de Produção</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <!-- Prensa Hidráulica -->
+    <div class="p-4">
+      <h3 class="text-lg font-semibold text-gray-700">Prensa Hidráulica</h3>
+      <p>Tempo Total de Operação: <span
+          class="font-bold">{{productionInsights.hydraulicStats.totalOperationTime}}</span> minutos</p>
+      <p>Pressão Média: <span class="font-bold">{{productionInsights.hydraulicStats.averagePressure}}</span> PSI</p>
+      <p>Temperatura Média do Óleo: <span
+          class="font-bold">{{productionInsights.hydraulicStats.averageOilTemperature}}</span> °C</p>
+    </div>
+    <!-- Torno Mecânico -->
+    <div class="p-4">
+      <h3 class="text-lg font-semibold text-gray-700">Torno Mecânico</h3>
+      <p>RPM Médio: <span class="font-bold">{{productionInsights.latheStats.averageRPM}}</span></p>
+      <p>Temperatura Média: <span class="font-bold">{{productionInsights.latheStats.averageTemperature}}</span> °C</p>
+      <p>Eventos de Alta Vibração: <span class="font-bold">{{productionInsights.latheStats.highVibrationCount}}</span>
+      </p>
+    </div>
+    <!-- Esteira Transportadora -->
+    <div class="p-4">
+      <h3 class="text-lg font-semibold text-gray-700">Esteira Transportadora</h3>
+      <p>Carga Total: <span class="font-bold">{{productionInsights.conveyorStats.totalLoad}}</span> kg</p>
+      <p>Velocidade Média: <span class="font-bold">{{productionInsights.conveyorStats.averageSpeed}}</span> m/s</p>
+      <p>Temperatura Média do Motor: <span
+          class="font-bold">{{productionInsights.conveyorStats.averageMotorTemperature}}</span> °C</p>
+    </div>
+  </div>
+</div>

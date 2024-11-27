@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model HydraulicPressData {
+  id             Int      @id @default(autoincrement())
+  machineId      String
+  pressure       Float
+  oilTemperature Float
+  operationTime  Int
+  timestamp      DateTime @default(now())
+}
+
+model LatheMachineData {
+  id          Int      @id @default(autoincrement())
+  machineId   String
+  rpm         Float
+  temperature Float
+  vibration   Float
+  timestamp   DateTime @default(now())
+}
+
+model ConveyorBeltData {
+  id               Int      @id @default(autoincrement())
+  machineId        String
+  speed            Float
+  load             Float
+  motorTemperature Float
+  timestamp        DateTime @default(now())
+}
